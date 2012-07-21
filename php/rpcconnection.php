@@ -4,14 +4,14 @@ require_once( dirname( __FILE__ ) . '/../config/config.php' );
 require_once( dirname( __FILE__ ) . '/classes/TransmissionRPC.class.php' );
 require_once( dirname( __FILE__ ) . '/classes/CookiesManager.class.php' );
 
-$defaultTorrentFields = array( 
+$defaultTorrentFields = array(
 	"addedDate", "name", "status", "doneDate", "haveValid", "totalSize", "uploadRatio",
 	"rateDownload", "rateUpload", "percentDone", "fileStats", "totalSize", "eta",
 	"downloadedEver", "leftUntilDone", "status", "hashString", "downloadDir", "trackerStats", "error",
 	"uploadedEver"
 	);
 
-$torrentDetailsFields = array( 
+$torrentDetailsFields = array(
 	"addedDate", "name", "status", "doneDate", "haveValid", "totalSize", "uploadRatio",
 	"dateCreated", "pieceCount", "pieceSize", "comment", "doneDate",
 	"downloadedEver", "leftUntilDone", "status", "id", "hashString", "downloadDir", "hashString",
@@ -24,6 +24,12 @@ $torrentDetailsFields = array(
 $torrentFilesFields = array(
 	"files", "fileStats"
 	);
+
+if(isset(AUTH_SECRET) && AUTH_SECRET != '') {
+    if(AUTH_SECRET != $_POST["secret"]) {
+        die('Invalid secret');
+    }
+}
 
 try {
 	$rpc = new TransmissionRPC( TRANSMISSION_RPC_URL, TRANSMISSION_RPC_USERNAME, TRANSMISSION_RPC_PASSWORD );
@@ -49,7 +55,7 @@ switch( $_POST["method"] ) {
 		} else {
 			echo formatResponse( true, $result->arguments );
 		}
-		
+
 		break;
 	case 'addTorrentURL':
 		$inUrl = $_POST["url"];
@@ -71,7 +77,7 @@ switch( $_POST["method"] ) {
 		if ( $result->result != "success" ) {
 			echo formatResponse( false, null, $result->result );
 		} else {
-			echo formatResponse( true, $result->arguments ); 
+			echo formatResponse( true, $result->arguments );
 		}
 
 		break;
@@ -81,7 +87,7 @@ switch( $_POST["method"] ) {
 		if ( $result->result != "success" ) {
 			echo formatResponse( false, null, $result->result );
 		} else {
-			echo formatResponse( true, $result->arguments ); 
+			echo formatResponse( true, $result->arguments );
 		}
 		break;
 	case 'stopTorrents':
@@ -90,7 +96,7 @@ switch( $_POST["method"] ) {
 		if ( $result->result != "success" ) {
 			echo formatResponse( false, null, $result->result );
 		} else {
-			echo formatResponse( true, $result->arguments ); 
+			echo formatResponse( true, $result->arguments );
 		}
 		break;
 	case 'getTorrentDetails':
@@ -99,7 +105,7 @@ switch( $_POST["method"] ) {
 		if ( $result->result != "success" ) {
 			echo formatResponse( false, null, $result->result );
 		} else {
-			echo formatResponse( true, $result->arguments ); 
+			echo formatResponse( true, $result->arguments );
 		}
 		break;
 	case 'getTorrentFiles':
@@ -108,7 +114,7 @@ switch( $_POST["method"] ) {
 		if ( $result->result != "success" ) {
 			echo formatResponse( false, null, $result->result );
 		} else {
-			echo formatResponse( true, $result->arguments ); 
+			echo formatResponse( true, $result->arguments );
 		}
 		break;
 	case 'deleteTorrentsAndFiles':
@@ -117,7 +123,7 @@ switch( $_POST["method"] ) {
 		if ( $result->result != "success" ) {
 			echo formatResponse( false, null, $result->result );
 		} else {
-			echo formatResponse( true, $result->arguments ); 
+			echo formatResponse( true, $result->arguments );
 		}
 		break;
 	case 'setFilePriority':
@@ -136,7 +142,7 @@ switch( $_POST["method"] ) {
 
 		}
 
-		
+
 
 		break;
 	default:

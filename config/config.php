@@ -14,4 +14,6 @@ define( 'TOP_BROWSE_FOLDER', '/' );
 
 define( 'COOKIES_FILE' ,  dirname( __FILE__ ) . '/../settings/cookies' );
 
+define( 'AUTH_SECRET', '' );
+
 ?>
